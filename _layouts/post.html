@@ -1,12 +1,16 @@
 ---
 layout: default
 ---
-<article class="container mx-auto px-6 py-12">
+<article class="container mx-auto px-6 py-12 max-w-4xl">
     <header class="mb-8">
-        <h1 class="text-4xl font-bold mb-4">{{ page.title }}</h1>
+        <h1 class="text-4xl font-bold mb-4">
+            <span class="khmer-content">{{ page.title_kh }}</span>
+            <span class="english-content hidden-lang">{{ page.title_en }}</span>
+        </h1>
         <div class="text-gray-400">
             <time datetime="{{ page.date | date_to_xmlschema }}">
-                {{ page.date | date: "%B %d, %Y" }}
+                <span class="khmer-content">{{ page.date_kh | date: page.date_kh }} ({{ page.author_kh}})</span>
+                <span class="english-content hidden-lang">{{ page.date_en | date: "%B %d, %Y" }} ({{ page.author_en}})</span>
             </time>
             {% if page.categories %}
             <span class="mx-2">•</span>
@@ -15,9 +19,125 @@ layout: default
             {% endfor %}
             {% endif %}
         </div>
+        <div class="mt-4 flex justify-end">
+            <button id="langToggle" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                English
+            </button>
+        </div>
+    </header>
     </header>
 
     <div class="prose prose-lg prose-invert max-w-none">
         {{ content }}
     </div>
 </article>
+
+<style>
+    /* Base prose styles */
+    .prose {
+        color: #d1d5db;
+        max-width: none;
+        width: 100%;
+        text-align: justify;
+        padding-right: 1rem; /* Add padding to account for the button */
+    }
+
+    .prose p {
+        margin-bottom: 1.5rem;
+        line-height: 1.75;
+        text-align: justify;
+        hyphens: auto;
+    }
+
+    article {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .prose h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: #fff;
+        line-height: 1.2;
+    }
+
+    .prose h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #fff;
+        line-height: 1.3;
+    }
+
+    .prose p {
+        margin-bottom: 1.5rem;
+        line-height: 1.75;
+    }
+
+    .prose ul {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        list-style-type: disc;
+        padding-left: 1.5rem;
+    }
+
+    .prose li {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .prose strong {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    /* Language specific styles */
+    .khmer-content {
+        font-family: 'Hanuman', 'Kantumruy Pro', system-ui, sans-serif;
+        line-height: 1.8;
+    }
+
+    .english-content {
+        font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* Content transitions */
+    .khmer-content, .english-content {
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .hidden-lang {
+        display: none;
+        opacity: 0;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const langToggle = document.getElementById('langToggle');
+        const khmerElements = document.querySelectorAll('.khmer-content');
+        const englishElements = document.querySelectorAll('.english-content');
+        let isEnglish = true;
+
+        // Initialize - Khmer hidden by default
+        khmerElements.forEach(el => el.classList.add('hidden-lang'));
+        englishElements.forEach(el => el.classList.remove('hidden-lang'));
+        langToggle.textContent = 'ភាសាខ្មែរ';
+
+        langToggle.addEventListener('click', function() {
+            if (isEnglish) {
+                englishElements.forEach(el => el.classList.add('hidden-lang'));
+                khmerElements.forEach(el => el.classList.remove('hidden-lang'));
+                langToggle.textContent = 'English';
+            } else {
+                englishElements.forEach(el => el.classList.remove('hidden-lang'));
+                khmerElements.forEach(el => el.classList.add('hidden-lang'));
+                langToggle.textContent = 'ភាសាខ្មែរ';
+            }
+            isEnglish = !isEnglish;
+        });
+    });
+</script>
