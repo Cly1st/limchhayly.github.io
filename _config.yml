@@ -1,7 +1,11 @@
 title: Chhayly Lim
 description: AI/Software Engineer & Educator
-url: "https://limchhayly.github.io"
+url: "https://aicambodia.space"
 baseurl: ""
+
+# Custom domain
+domain: aicambodia.space
+cname: aicambodia.space
 
 # Blog settings
 permalink: /blog/:year/:month/:day/:title/
