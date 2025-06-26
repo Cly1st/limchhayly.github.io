@@ -9,8 +9,8 @@ layout: default
         </h1>
         <div class="text-gray-400">
             <time datetime="{{ page.date | date_to_xmlschema }}">
-                <span class="khmer-content">{{ page.date_kh | date: page.date_kh }} ({{ page.author_kh}})</span>
-                <span class="english-content hidden-lang">{{ page.date_en | date: "%B %d, %Y" }} ({{ page.author_en}})</span>
+                <span class="khmer-content">{{ page.date_kh | date: page.date_kh }}</span>
+                <span class="english-content hidden-lang">{{ page.date_en | date: "%B %d, %Y" }}</span>
             </time>
             {% if page.categories %}
             <span class="mx-2">•</span>
